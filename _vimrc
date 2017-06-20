@@ -132,12 +132,20 @@ let g:multi_cursor_skip_key='<C-x>'
 let g:multi_cursor_quit_key='<Esc>'
 
 
+" -----------------------------------------------------------------------------
+"  < snipMate 插件配置 >
+" -----------------------------------------------------------------------------
+" 用于各种代码补全，这种补全是一种对代码中的词与代码块的缩写补全，详细用法可以参
+" 考使用说明或网络教程等。不过有时候也会与 supertab 插件在补全时产生冲突，如果大
+" 侠有什么其它解决方法希望不要保留呀
+Plugin 'msanders/snipmate.vim'
+
 
 "==================目录导航==================="
 " ##### 目录导航
 Plugin 'scrooloose/nerdtree'
 map <F3> :NERDTreeToggle<CR>
-let NERDTreeHighlightCursorline=0
+" let NERDTreeHighlightCursorline=0
 let NERDTreeIgnore=[ '\.pyc$', '\.pyo$', '\.obj$', '\.o$', '\.so$', '\.egg$', '^\.git$', '^\.svn$', '^\.hg$' ]
 "close vim if the only window left open is a NERDTree
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | end
@@ -174,6 +182,27 @@ Plugin 'tpope/vim-fugitive'
 " setting theme 'altercation/vim-colors-solarized'"
 Plugin 'altercation/vim-colors-solarized'
 
+
+Plugin 'Yggdroot/indentLine'
+" -----------------------------------------------------------------------------
+"  < indentLine 插件配置 >
+" -----------------------------------------------------------------------------
+" 用于显示对齐线，与 indent_guides 在显示方式上不同，根据自己喜好选择了
+" 在终端上会有屏幕刷新的问题，这个问题能解决有更好了
+" 开启/关闭对齐线
+nmap <leader>il :IndentLinesToggle<CR>
+
+" 设置Gvim的对齐线样式
+if g:isGUI
+    let g:indentLine_char = "┊ "
+    let g:indentLine_first_char = "┊ "
+endif
+
+" 设置终端对齐线颜色，如果不喜欢可以将其注释掉采用默认颜色
+let g:indentLine_color_term = 239
+
+" 设置 GUI 对齐线颜色，如果不喜欢可以将其注释掉采用默认颜色
+" let g:indentLine_color_gui = '#A4E57E'
 
 
 
@@ -331,16 +360,54 @@ set fileencodings=ucs-bom,utf-8,gbk,cp936,latin-1     "设置支持打开的文�
 " 文件格式，默认 ffs=dos,unix
 set fileformat=unix                                   "设置新（当前）文件的<EOL>格式，可以更改，如：dos（windows系统常用）
 set fileformats=unix,dos,mac                          "给出文件的<EOL>格式类型
- 
+
+if g:isGUI
+    " au GUIEnter * simalt ~x                           "窗口启动时自动最大化
+    winpos 100 10                                     "指定窗口出现的位置，坐标原点在屏幕左上角
+    set lines=38 columns=120                          "指定窗口大小，lines为高度，columns为宽度
+endif
+
+if g:iswindows
+    " :set guifont=Courier:14
+endif
+
+
 if (g:iswindows && g:isGUI)
     "解决菜单乱码
     source $VIMRUNTIME/delmenu.vim
     source $VIMRUNTIME/menu.vim
- 
     "解决consle输出乱码
     language messages zh_CN.utf-8
 endif
 
+
+" -----------------------------------------------------------------------------
+"  < 其它配置 >
+" -----------------------------------------------------------------------------
+set writebackup                             "保存文件前建立备份，保存成功后删除该备份
+set nobackup                                "设置无备份文件
+" set noswapfile                              "设置无临时文件
+" set vb t_vb=                                "关闭提示音
+
+
+" 显示/隐藏菜单栏、工具栏、滚动条，可用 Ctrl + F11 切换
+if g:isGUI
+    set guioptions-=m
+    set guioptions-=T
+    set guioptions-=r
+    set guioptions-=L
+    nmap <silent> <c-F11> :if &guioptions =~# 'm' <Bar>
+        \set guioptions-=m <Bar>
+        \set guioptions-=T <Bar>
+        \set guioptions-=r <Bar>
+        \set guioptions-=L <Bar>
+    \else <Bar>
+        \set guioptions+=m <Bar>
+        \set guioptions+=T <Bar>
+        \set guioptions+=r <Bar>
+        \set guioptions+=L <Bar>
+    \endif<CR>
+endif
 
 
 
