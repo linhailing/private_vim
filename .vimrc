@@ -344,6 +344,8 @@ au BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
 "设置编码"
 set encoding=utf-8
 
-
+" setting ctags "
+set tags=./tags,tags;  " ; 不可省略，表示若当前目录中不存在tags， 则在父目录中寻找。
+set autochdir
 
 
