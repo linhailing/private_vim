@@ -329,8 +329,8 @@ au BufNewFile,BufRead *.py
 \ set shiftwidth=4 |
 \ set textwidth=69 |
 \ set expandtab |
-\ set autoindex |
 \ set fileformat=unix
+
 
 " 设置web类型页面色tab空格长度"
 au BufNewFile,BufRead *.js,*.html,*.css
@@ -339,6 +339,7 @@ au BufNewFile,BufRead *.js,*.html,*.css
 \ set shiftwidth=2 |
 
 "标示不必要的空白字符"
+hi BadWhitespace guifg=gray guibg=red ctermfg=gray ctermbg=red
 au BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
 "设置编码"
 set encoding=utf-8
