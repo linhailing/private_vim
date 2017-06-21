@@ -1,7 +1,7 @@
 " =============================================================================
 "        << 判断操作系统是 Windows 还是 Linux 和判断是终端还是 Gvim >>
 " =============================================================================
- 
+
 " -----------------------------------------------------------------------------
 "  < 判断操作系统是否是 Windows 还是 Linux >
 " -----------------------------------------------------------------------------
@@ -12,7 +12,7 @@ if(has("win32") || has("win64") || has("win95") || has("win16"))
 else
     let g:islinux = 1
 endif
- 
+
 " -----------------------------------------------------------------------------
 "  < 判断是终端还是 Gvim >
 " -----------------------------------------------------------------------------
@@ -33,7 +33,7 @@ if (g:iswindows && g:isGUI)
     source $VIMRUNTIME/mswin.vim
     behave mswin
     set diffexpr=MyDiff()
- 
+
     function MyDiff()
         let opt = '-a --binary '
         if &diffopt =~ 'icase' | let opt = opt . '-i ' | endif
@@ -168,17 +168,30 @@ let g:nerdtree_tabs_synchronize_focus=0
 
 "==================vim状态栏美化：powerline==================="
 " ##### vim-powerline
-Plugin 'Lokaltog/vim-powerline'
-" Bundle ' bling/vim-airline'
+" Plugin 'Lokaltog/vim-powerline'
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
 " Always show the status line - use 2 lines for the status bar
-set laststatus=2
+:set laststatus=2
+" let g:airline_powerline_fonts = 1
+
+
+
+
 
 "python自动缩进"
 Plugin 'vim-scripts/indentpython.vim'
 
 "git setting"
-Plugin 'tpope/vim-fugitive'
+Plugin 'airblade/vim-gitgutter'
+let g:gitgutter_realtime = 0
+let g:gitgutter_eager = 0
+
+
 " Plugin 'Valloric/YouCompleteMe'
+
+
+
 " setting theme 'altercation/vim-colors-solarized'"
 Plugin 'altercation/vim-colors-solarized'
 
@@ -203,6 +216,14 @@ let g:indentLine_color_term = 239
 
 " 设置 GUI 对齐线颜色，如果不喜欢可以将其注释掉采用默认颜色
 " let g:indentLine_color_gui = '#A4E57E'
+
+
+" -----------------------------------------------------------------------------
+"  < vim-php-wrapper 插件配置 >
+" -----------------------------------------------------------------------------
+Plugin 'diepm/vim-php-wrapper'
+let g:vphpw_use_default_mapping = 1
+let g:vphpw_use_dispatch = 1
 
 
 
@@ -420,9 +441,9 @@ endif
 
 " 设置一个配色方案
 " colorscheme desert
-
 set background=dark
 colorscheme solarized
+let g:solarized_termcolors=256
 
 
 " 检查文件类型 detect file type
@@ -503,7 +524,8 @@ au BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
 " set encoding=utf-8
 
 " setting ctags "
-set tags=./tags,tags;  " ; 不可省略，表示若当前目录中不存在tags， 则在父目录中寻找。
+" set tags=./tags,tags;  " ; 不可省略，表示若当前目录中不存在tags， 则在父目录中寻找。
 set autochdir
+set tags=tags;
 
 
