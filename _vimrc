@@ -388,10 +388,22 @@ if g:isGUI
     set lines=38 columns=120                          "指定窗口大小，lines为高度，columns为宽度
 endif
 
-if g:iswindows
-    " :set guifont=Courier:14
-endif
+""if g:iswindows
+""    set guifont=Courier_new:h14:b:cDEFAULT
+""endif
+""
+""if g:islinux
+""    set guifont=Monaco:h14
+""endif
 
+"  s设置多个字体
+set guifont=Monaco:h14,Courier_new:h14:b:cDEFAULT
+
+" 设置mac 下macvim全屏
+if g:islinux
+	set guioptions-=r
+	set guioptions-=L
+endif
 
 if (g:iswindows && g:isGUI)
     "解决菜单乱码
@@ -454,13 +466,13 @@ filetype plugin on
 " set autoindex
 
 " 设置制表符(tab键)的宽度
-" set tabstop=4
+set tabstop=4
 
 " 设置软制表符的宽度
-" set softtabstop=4
+set softtabstop=4
 
 " (自动) 缩进使用的4个空格
-" set shiftwidth=4
+set shiftwidth=4
 
 " 设置匹配模式，显示匹配的括号
 set showmatch
@@ -494,19 +506,54 @@ set hlsearch
 nmap cS :%s/\s\+$//g<CR>:noh<CR>
 
 " 设置括号,{},[], "",''....
-inoremap ( ()<ESC>i
-inoremap [ []<ESC>i
-inoremap { {}<ESC>i
-inoremap < <><ESC>i
-inoremap " ""<ESC>i
-inoremap ' ''<ESC>i
+inoremap ( ()<Esc>i
+inoremap [ []<Esc>i
+inoremap { {<CR>}<Esc>O
+autocmd Syntax html,vim inoremap < <lt>><Esc>i| inoremap > <c-r>=ClosePair('>')<CR>
+inoremap ) <c-r>=ClosePair(')')<CR>
+inoremap ] <c-r>=ClosePair(']')<CR>
+inoremap } <c-r>=CloseBracket()<CR>
+inoremap " <c-r>=QuoteDelim('"')<CR>
+inoremap ' <c-r>=QuoteDelim("'")<CR>
+
+function ClosePair(char)
+	if getline('.')[col('.') - 1] == a:char
+		return "\<Right>"
+	else
+		return a:char
+	endif
+endf
+
+function CloseBracket()
+	if match(getline(line('.') + 1), '\s*}') < 0
+		return "\<CR>}"
+	else
+		return "\<Esc>j0f}a"
+	endif
+endf
+
+function QuoteDelim(char)
+	let line = getline('.')
+	let col = col('.')
+	if line[col - 2] == "\\"
+		return a:char
+	elseif line[col - 1] == a:char
+		return "\<Right>"
+	else
+		return a:char.a:char."\<Esc>i"
+	endif
+endf
+
+
+" 设置光标所在行高亮
+:set cursorline
 
 " PEP8风格的缩进*.py文件
 au BufNewFile,BufRead *.py
 \ set tabstop=4 |
 \ set softtabstop=4 |
 \ set shiftwidth=4 |
-\ set textwidth=69 |
+\ set textwidth=350 |
 \ set expandtab |
 \ set fileformat=unix
 
@@ -526,6 +573,6 @@ au BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
 " setting ctags "
 " set tags=./tags,tags;  " ; 不可省略，表示若当前目录中不存在tags， 则在父目录中寻找。
 set autochdir
-set tags=tags;
+set tags=./tags,tags;
 
 
