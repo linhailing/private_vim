@@ -181,9 +181,11 @@ Plugin 'jceb/vim-orgmode'
 Plugin 'tpope/vim-speeddating'
 
 " markdown
+" Plugin 'godlygeek/tabular'
 Plugin 'plasticboy/vim-markdown'
 " 可以通过浏览器实时预览，但是要安装额外依赖，详见官网
-"Plugin 'suan/vim-instant-markdown'
+" Plugin 'suan/vim-instant-markdown'
+Plugin 'dhruvasagar/vim-table-mode'
 
 
 " 网页开发
