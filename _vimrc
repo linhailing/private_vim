@@ -937,3 +937,15 @@ endfunc
 
 
 
+"=================VIM 自己快捷键的配置============"
+" leader键的设置
+:let mapleader = ','
+" 在insert mode 下输入ctrl-d 则删除一行
+:inoremap <c-d> <esc>ddo
+" insert mod ctrl-s save
+:inoremap <c-s> <esc>:w<cr>
+:nnoremap <leader>c <esc>ddo
+" 映射编辑vimrc文件
+:nnoremap <leader>ev :vsplit $MYVIMRC<cr>
+" 重读映射配
+:nnoremap <Leader>sv :source $MYVIMRC<cr>
