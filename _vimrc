@@ -262,7 +262,7 @@ set nocompatible                                                " 不使用vi的
 syntax on                                                       " 语法高亮支持
 set nu                                                          " 显示行号
 set rnu                                                         " 显示相对行号
-set wrap                                                        " 当一行文字很长时换行
+" set wrap                                                        " 当一行文字很长时换行
 "set nowrap                                                      " 当一行文字很长时取消换行
 set showmatch                                                   " 当光标移动到一个括号时高亮显示对应的另一个括号
 set showcmd                                                     " 回显输入的命令
@@ -379,6 +379,10 @@ au BufNewFile,BufRead *.js,*.html,*.css
 \ set tabstop=2 |
 \ set softtabstop=2 |
 \ set shiftwidth=2 |
+
+" 设置支持微信小程序后缀编辑
+au BufNewFile,BufRead *.wxml setlocal filetype=html
+au BufNewFile,BufRead *.wxss setlocal filetype=css
 
 
 
@@ -688,7 +692,7 @@ let g:gitgutter_eager = 0
 
 
 
-" ********** Emmet--> html插件 **********
+********** Emmet--> html插件 **********
 let g:user_emmet_expandabbr_key = '<Tab>'
 let g:user_emmet_settings = {
             \ 'php' : {
@@ -949,3 +953,19 @@ endfunc
 :nnoremap <leader>ev :vsplit $MYVIMRC<cr>
 " 重读映射配
 :nnoremap <Leader>sv :source $MYVIMRC<cr>
+
+" 输入某些特殊的字符和空格是会替代一些字符，如
+" 输入@@ + 空格 会替换hailing.lin@outlook.com
+:iabbrev @@ hailing.lin@outlook.com
+:iabbrev ccopy Copyright 2017 Henry Lin, all rights reserved. 
+" 一个测试配置键 如：
+:iabbrev ssig -- <cr>Henry Lin<cr>hailing.lin@outlook.com<cr>
+
+" 给一个单词添加 \"\"(双引号)
+:nnoremap <Leader>" viw<esc>a"<esc>hbi"<esc>lel
+:nnoremap <Leader>' viw<esc>a'<esc>hbi'<esc>lel
+
+" 一些快捷键的注释，这个必须是在nomore模式的
+:nnoremap <Leader># ^i# <esc>^i
+:nnoremap <Leader>/ ^i// <esc>^i
+
